@@ -52,13 +52,17 @@
             padding: 2rem;
         }
 
+        /* Mejora de h2 */
         h2 {
-            color: #4CAF50;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 0.5rem;
+            color: #388E3C;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 0.7rem;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
         }
 
-        /* Grid para las cards */
         .cards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -69,13 +73,19 @@
         .card {
             background-color: white;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             padding: 1rem;
             text-align: center;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
         }
 
         .card img {
@@ -83,23 +93,47 @@
             height: 200px;
             object-fit: cover;
             margin-bottom: 1rem;
+            border-radius: 4px;
         }
 
         .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #2E7D32;
+        }
+
+        .card-price {
+            color: #E53935;
             font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
 
-        .card-price {
-            color: #E53935;
-            font-size: 1rem;
-            font-weight: bold;
+        .card-stock {
+            font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
 
-        .card-stock {
-            margin-bottom: 0.5rem;
+        progress {
+            width: 100%;
+            height: 14px;
+            appearance: none;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #eee;
+            border-radius: 7px;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #4CAF50;
+            border-radius: 7px;
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #4CAF50;
+            border-radius: 7px;
         }
 
         .divider {
@@ -163,7 +197,6 @@
     <h2>🍇 Productos destacados</h2>
 
     <div class="cards">
-        <!-- Card 1 -->
         <div class="card">
             <img src="https://via.placeholder.com/200x200?text=Fresa+Albion" alt="Fresa Albion">
             <div class="card-title">Fresa Albion caja × 4 kg grande</div>
@@ -172,7 +205,6 @@
             <progress value="25" max="100">25%</progress>
         </div>
 
-        <!-- Card 2 -->
         <div class="card">
             <img src="https://via.placeholder.com/200x200?text=Fresa+Capitola" alt="Fresa Capitola">
             <div class="card-title">Fresa Capitola caja surtida 4 kg</div>
@@ -181,7 +213,6 @@
             <progress value="50" max="100">50%</progress>
         </div>
 
-        <!-- Card 3 -->
         <div class="card">
             <img src="https://via.placeholder.com/200x200?text=Fresa+Cesta" alt="Fresa Cesta">
             <div class="card-title">Fresa Capitola grande en cesta 13 kg</div>
@@ -190,7 +221,6 @@
             <progress value="80" max="100">80%</progress>
         </div>
 
-        <!-- Card 4 -->
         <div class="card">
             <img src="https://via.placeholder.com/200x200?text=Guanabana" alt="Guanabana">
             <div class="card-title">Guanábana en moya sin semilla 1 kg</div>
@@ -201,10 +231,8 @@
     </div>
 </section>
 
-<!-- Separador -->
 <div class="divider">🥶 Congelados y frescos los productos 🥶</div>
 
-<!-- Video de proceso -->
 <section class="section">
     <h2>🎬 Conoce cómo procesamos nuestros productos</h2>
     <div class="video-container">
@@ -215,7 +243,6 @@
     </div>
 </section>
 
-<!-- Más tarjetas de productos congelados -->
 <section class="section">
     <h2>🍈 Ventas de productos congelados</h2>
 
@@ -261,4 +288,5 @@
 
 </body>
 </html>
+
 
