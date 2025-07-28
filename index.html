@@ -82,6 +82,14 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       gap: 1rem;
     }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo-container img {
+      height: 40px;
+    }
     .modo-btn {
       background-color: var(--primary);
       color: white;
@@ -159,7 +167,10 @@
 </head>
 <body>
   <header>
-    <h2>Calculadora TefiCar</h2>
+    <div class="logo-container">
+      <img src="img/logo.png.png" alt="Logo TefiCar">
+      <h2>Calculadora TefiCar</h2>
+    </div>
     <button class="modo-btn" onclick="cambiarTema()">Modo claro/oscuro</button>
   </header>
 
@@ -198,5 +209,6 @@
   </footer>
 </body>
 </html>
+
 
 
