@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contadora TefiCar</title>
+  <script>
+    // 🔐 Protege acceso con login
+    if (localStorage.getItem("usuarioAutenticado") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
   <script defer>
     function agregarFila() {
       const tbody = document.getElementById('tabla-body');
@@ -50,6 +56,12 @@
       actualizarFechaHora();
       setInterval(actualizarFechaHora, 1000);
     }
+
+    // 🔓 Función para cerrar sesión
+    function cerrarSesion() {
+      localStorage.removeItem("usuarioAutenticado");
+      window.location.href = "login.html";
+    }
   </script>
   <style>
     :root {
@@ -93,8 +105,6 @@
       width: auto;
       border-radius: 8px;
     }
-
-    /* --- Botón claro/oscuro mejorado --- */
     .switch-container {
       display: flex;
       flex-direction: column;
@@ -158,7 +168,6 @@
     .switch-toggle.activo .moon {
       opacity: 1;
     }
-    /* --- fin botón --- */
 
     .container {
       max-width: 1100px;
@@ -271,6 +280,8 @@
 
     <p><strong>Total USD:</strong> $<span id="total-usd">0.00</span></p>
     <p><strong>Total Bs:</strong> Bs <span id="total-bs">0.00</span></p>
+
+    <button class="boton" style="background: crimson;" onclick="cerrarSesion()">Cerrar sesión</button>
   </div>
 
   <footer>
@@ -278,6 +289,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
