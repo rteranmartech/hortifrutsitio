@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Calculadora TefiCar</title>
   <style>
     :root {
@@ -25,28 +25,32 @@
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
+
     .login-box {
       background-color: var(--card);
       padding: 2rem;
       border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
       max-width: 400px;
       width: 90%;
       text-align: center;
     }
+
     .login-box img {
       height: 64px;
       border-radius: 8px;
       margin-bottom: 1rem;
     }
+
     h2 {
       margin-bottom: 1.5rem;
     }
+
     .input {
       padding: 0.5rem;
       border-radius: 6px;
@@ -55,6 +59,7 @@
       box-sizing: border-box;
       margin: 0.5rem 0 1rem;
     }
+
     .boton {
       background-color: var(--primary);
       color: white;
@@ -63,16 +68,18 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
+      width: 100%;
     }
+
     .boton:hover {
       opacity: 0.9;
     }
+
     #error {
       color: red;
       margin-top: 1rem;
     }
 
-    /* Toggle tema */
     .tema-container {
       margin-top: 2rem;
       display: flex;
@@ -80,6 +87,7 @@
       align-items: center;
       gap: 0.5rem;
     }
+
     .switch-toggle {
       position: relative;
       width: 60px;
@@ -89,6 +97,7 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
+
     .switch-toggle::before {
       content: '';
       position: absolute;
@@ -101,6 +110,7 @@
       transition: transform 0.3s ease;
       z-index: 1;
     }
+
     .switch-icon span {
       position: absolute;
       top: 50%;
@@ -114,24 +124,40 @@
       pointer-events: none;
       transition: opacity 0.3s;
     }
+
     .switch-icon .sun {
       left: 4px;
       opacity: 1;
       z-index: 2;
     }
+
     .switch-icon .moon {
       right: 4px;
       opacity: 0;
       z-index: 2;
     }
+
     .switch-toggle.activo::before {
       transform: translateX(28px);
     }
+
     .switch-toggle.activo .sun {
       opacity: 0;
     }
+
     .switch-toggle.activo .moon {
       opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 1.5rem;
+        border-radius: 12px;
+      }
+
+      .login-box img {
+        height: 48px;
+      }
     }
   </style>
 </head>
@@ -179,5 +205,6 @@
   </script>
 </body>
 </html>
+
 
 
