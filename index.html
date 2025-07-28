@@ -43,6 +43,7 @@
 
     function cambiarTema() {
       document.body.classList.toggle('oscuro');
+      document.getElementById("switch-icon").classList.toggle("activo");
     }
 
     window.onload = function () {
@@ -92,18 +93,60 @@
       width: auto;
       border-radius: 8px;
     }
-    .modo-btn {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+
+    /* --- Botón claro/oscuro estilo pro --- */
+    .switch-container {
+      display: flex;
+      align-items: center;
+    }
+    .switch-toggle {
+      position: relative;
+      width: 60px;
+      height: 32px;
+      background: var(--border);
+      border-radius: 50px;
       cursor: pointer;
-      font-size: 0.9rem;
+      transition: background 0.3s;
     }
-    .modo-btn:hover {
-      opacity: 0.9;
+    .switch-toggle::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
     }
+    .switch-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .sun-icon {
+      left: 10px;
+      color: #ffcc00;
+    }
+    .moon-icon {
+      right: 10px;
+      color: #ffffff;
+      opacity: 0;
+    }
+    .activo::before {
+      transform: translateX(28px);
+    }
+    .activo .sun-icon {
+      opacity: 0;
+    }
+    .activo .moon-icon {
+      opacity: 1;
+    }
+    /* --- fin del botón --- */
+
     .container {
       max-width: 1100px;
       margin: 2rem auto;
@@ -176,7 +219,12 @@
       <img src="img/logo.png.png" alt="Logo TefiCar">
       <h2>Calculadora TefiCar</h2>
     </div>
-    <button class="modo-btn" onclick="cambiarTema()">Modo claro/oscuro</button>
+    <div class="switch-container" onclick="cambiarTema()">
+      <div class="switch-toggle" id="switch-icon">
+        <span class="switch-icon sun-icon">☀️</span>
+        <span class="switch-icon moon-icon">🌙</span>
+      </div>
+    </div>
   </header>
 
   <div class="container">
