@@ -57,7 +57,6 @@
       setInterval(actualizarFechaHora, 1000);
     }
 
-    // 🔓 Función para cerrar sesión
     function cerrarSesion() {
       localStorage.removeItem("usuarioAutenticado");
       window.location.href = "login.html";
@@ -168,7 +167,6 @@
     .switch-toggle.activo .moon {
       opacity: 1;
     }
-
     .container {
       max-width: 1100px;
       margin: 2rem auto;
@@ -241,14 +239,17 @@
       <img src="img/logo.png.png" alt="Logo TefiCar">
       <h2>Calculadora TefiCar</h2>
     </div>
-    <div class="switch-container" onclick="cambiarTema()">
-      <div class="switch-label">Ajusta tono</div>
-      <div class="switch-toggle" id="switch-icon">
-        <div class="switch-icon">
-          <span class="sun">☀️</span>
-          <span class="moon">🌙</span>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="switch-container" onclick="cambiarTema()">
+        <div class="switch-label">Ajusta tono</div>
+        <div class="switch-toggle" id="switch-icon">
+          <div class="switch-icon">
+            <span class="sun">☀️</span>
+            <span class="moon">🌙</span>
+          </div>
         </div>
       </div>
+      <button class="boton" style="background: crimson;" onclick="cerrarSesion()">Cerrar sesión</button>
     </div>
   </header>
 
@@ -280,8 +281,6 @@
 
     <p><strong>Total USD:</strong> $<span id="total-usd">0.00</span></p>
     <p><strong>Total Bs:</strong> Bs <span id="total-bs">0.00</span></p>
-
-    <button class="boton" style="background: crimson;" onclick="cerrarSesion()">Cerrar sesión</button>
   </div>
 
   <footer>
@@ -289,6 +288,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
