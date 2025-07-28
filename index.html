@@ -94,19 +94,25 @@
       border-radius: 8px;
     }
 
-    /* --- Botón claro/oscuro estilo pro --- */
+    /* --- Botón claro/oscuro mejorado --- */
     .switch-container {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      gap: 0.5rem;
+    }
+    .switch-label {
+      font-size: 0.9rem;
+      font-weight: 600;
     }
     .switch-toggle {
       position: relative;
       width: 60px;
       height: 32px;
       background: var(--border);
-      border-radius: 50px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s ease;
     }
     .switch-toggle::before {
       content: '';
@@ -115,37 +121,44 @@
       left: 4px;
       width: 24px;
       height: 24px;
-      background: white;
+      background-color: white;
       border-radius: 50%;
       transition: transform 0.3s ease;
+      z-index: 1;
     }
-    .switch-icon {
+    .switch-icon span {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 16px;
       pointer-events: none;
       transition: opacity 0.3s;
     }
-    .sun-icon {
-      left: 10px;
-      color: #ffcc00;
+    .switch-icon .sun {
+      left: 4px;
+      opacity: 1;
+      z-index: 2;
     }
-    .moon-icon {
-      right: 10px;
-      color: #ffffff;
+    .switch-icon .moon {
+      right: 4px;
       opacity: 0;
+      z-index: 2;
     }
-    .activo::before {
+    .switch-toggle.activo::before {
       transform: translateX(28px);
     }
-    .activo .sun-icon {
+    .switch-toggle.activo .sun {
       opacity: 0;
     }
-    .activo .moon-icon {
+    .switch-toggle.activo .moon {
       opacity: 1;
     }
-    /* --- fin del botón --- */
+    /* --- fin botón --- */
 
     .container {
       max-width: 1100px;
@@ -220,9 +233,12 @@
       <h2>Calculadora TefiCar</h2>
     </div>
     <div class="switch-container" onclick="cambiarTema()">
+      <div class="switch-label">Ajusta tono</div>
       <div class="switch-toggle" id="switch-icon">
-        <span class="switch-icon sun-icon">☀️</span>
-        <span class="switch-icon moon-icon">🌙</span>
+        <div class="switch-icon">
+          <span class="sun">☀️</span>
+          <span class="moon">🌙</span>
+        </div>
       </div>
     </div>
   </header>
@@ -262,6 +278,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
