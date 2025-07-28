@@ -1,291 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Frutas Frescas y Congeladas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contadora TefiCar</title>
+  <script defer>
+    function agregarFila() {
+      const tbody = document.getElementById('tabla-body');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input type="text" placeholder="Código" class="input" /></td>
+        <td><input type="text" placeholder="Descripción" class="input" /></td>
+        <td><input type="number" placeholder="Cantidad" class="input cantidad" oninput="calcularImporte(this)" /></td>
+        <td><input type="number" placeholder="Precio $" class="input precio" oninput="calcularImporte(this)" /></td>
+        <td class="importe">0.00</td>
+      `;
+      tbody.appendChild(row);
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-        }
+    function calcularImporte(elemento) {
+      const fila = elemento.closest('tr');
+      const cantidad = parseFloat(fila.querySelector('.cantidad').value) || 0;
+      const precio = parseFloat(fila.querySelector('.precio').value) || 0;
+      const importe = cantidad * precio;
+      fila.querySelector('.importe').innerText = importe.toFixed(2);
+      calcularTotal();
+    }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
+    function calcularTotal() {
+      const importes = document.querySelectorAll('.importe');
+      let totalDolares = 0;
+      importes.forEach(cell => totalDolares += parseFloat(cell.innerText) || 0);
+      document.getElementById('total-usd').innerText = totalDolares.toFixed(2);
+      const tasa = parseFloat(document.getElementById('tasa-dolar').value) || 0;
+      document.getElementById('total-bs').innerText = (totalDolares * tasa).toFixed(2);
+    }
 
-        nav {
-            background-color: #388E3C;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 0.5rem 0;
-        }
+    function actualizarFechaHora() {
+      const ahora = new Date();
+      document.getElementById('fecha-hora').innerText = ahora.toLocaleString();
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    function cambiarTema() {
+      document.body.classList.toggle('oscuro');
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .social {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            padding: 0.5rem 0;
-            background-color: #81C784;
-        }
-
-        .section {
-            padding: 2rem;
-        }
-
-        /* Mejora de h2 */
-        h2 {
-            color: #388E3C;
-            border-bottom: 3px solid #4CAF50;
-            padding-bottom: 0.7rem;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1.2rem;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .card img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #2E7D32;
-        }
-
-        .card-price {
-            color: #E53935;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-stock {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        progress {
-            width: 100%;
-            height: 14px;
-            appearance: none;
-        }
-
-        progress::-webkit-progress-bar {
-            background-color: #eee;
-            border-radius: 7px;
-        }
-
-        progress::-webkit-progress-value {
-            background-color: #4CAF50;
-            border-radius: 7px;
-        }
-
-        progress::-moz-progress-bar {
-            background-color: #4CAF50;
-            border-radius: 7px;
-        }
-
-        .divider {
-            background-color: #E0E0E0;
-            text-align: center;
-            font-weight: bold;
-            padding: 1rem;
-            margin: 2rem 0;
-            color: #333;
-        }
-
-        .video-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-
-        footer {
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        /* Responsive */
-        @media(max-width: 1024px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media(max-width: 600px) {
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    window.onload = function() {
+      actualizarFechaHora();
+      setInterval(actualizarFechaHora, 1000);
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --fg: #1f1f1f;
+      --card: #ffffff;
+      --primary: #007bff;
+      --border: #dcdcdc;
+    }
+    body.oscuro {
+      --bg: #121212;
+      --fg: #f0f0f0;
+      --card: #1e1e1e;
+      --primary: #4dabf7;
+      --border: #333;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--card);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .modo-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .modo-btn:hover {
+      opacity: 0.9;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .input {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--primary);
+      color: white;
+    }
+    .boton {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+    .boton:hover {
+      opacity: 0.9;
+    }
+    footer {
+      text-align: center;
+      margin: 3rem 0 1rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+  </style>
 </head>
-
 <body>
+  <header>
+    <h2>Calculadora TefiCar</h2>
+    <button class="modo-btn" onclick="cambiarTema()">Modo claro/oscuro</button>
+  </header>
 
-<header>
-    <h1>Frutas Frescas y Congeladas</h1>
-    <p>Producto 100% natural - Sin aditivos - Alto en vitaminas</p>
-</header>
+  <div class="container">
+    <p><strong>Fecha y hora actual:</strong> <span id="fecha-hora"></span></p>
+    <label><strong>Nro de Documento:</strong><br />
+      <input type="text" class="input" /></label>
+    <br /><br />
+    <label><strong>Tasa del dólar actual:</strong><br />
+      <input type="number" id="tasa-dolar" class="input" oninput="calcularTotal()" /></label>
+    <br /><br />
 
-<nav>
-    <a href="#">Inicio</a>
-    <a href="#">Catálogo</a>
-    <a href="#">Contacto</a>
-</nav>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio $</th>
+          <th>Importe</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-body"></tbody>
+    </table>
 
-<div class="social">
-    <a href="#">Instagram</a>
-    <a href="#">Twitter</a>
-    <a href="#">Facebook</a>
-</div>
+    <button class="boton" onclick="agregarFila()">Agregar línea</button>
 
-<section class="section">
-    <h2>🍇 Productos destacados</h2>
+    <p><strong>Total USD:</strong> $<span id="total-usd">0.00</span></p>
+    <p><strong>Total Bs:</strong> Bs <span id="total-bs">0.00</span></p>
+  </div>
 
-    <div class="cards">
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Fresa+Albion" alt="Fresa Albion">
-            <div class="card-title">Fresa Albion caja × 4 kg grande</div>
-            <div class="card-price">$25</div>
-            <div class="card-stock">Stock disponible: 25 unidades</div>
-            <progress value="25" max="100">25%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Fresa+Capitola" alt="Fresa Capitola">
-            <div class="card-title">Fresa Capitola caja surtida 4 kg</div>
-            <div class="card-price">$22</div>
-            <div class="card-stock">Stock disponible: 50 unidades</div>
-            <progress value="50" max="100">50%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Fresa+Cesta" alt="Fresa Cesta">
-            <div class="card-title">Fresa Capitola grande en cesta 13 kg</div>
-            <div class="card-price">$55</div>
-            <div class="card-stock">Stock disponible: 80 unidades</div>
-            <progress value="80" max="100">80%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Guanabana" alt="Guanabana">
-            <div class="card-title">Guanábana en moya sin semilla 1 kg</div>
-            <div class="card-price">$2.8</div>
-            <div class="card-stock">Stock disponible: 60 unidades</div>
-            <progress value="60" max="100">60%</progress>
-        </div>
-    </div>
-</section>
-
-<div class="divider">🥶 Congelados y frescos los productos 🥶</div>
-
-<section class="section">
-    <h2>🎬 Conoce cómo procesamos nuestros productos</h2>
-    <div class="video-container">
-        <video controls width="640" height="360">
-            <source src="tu-video.mp4" type="video/mp4">
-            Tu navegador no soporta la reproducción de video.
-        </video>
-    </div>
-</section>
-
-<section class="section">
-    <h2>🍈 Ventas de productos congelados</h2>
-
-    <div class="cards">
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Mora" alt="Mora congelada">
-            <div class="card-title">Mora congelada premium bolsa 1 kg</div>
-            <div class="card-price">$3.0</div>
-            <div class="card-stock">Stock disponible: 40 unidades</div>
-            <progress value="40" max="100">40%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Piña" alt="Piña en cubos">
-            <div class="card-title">Piña en cubos congelada 1 kg</div>
-            <div class="card-price">$2.5</div>
-            <div class="card-stock">Stock disponible: 70 unidades</div>
-            <progress value="70" max="100">70%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Mango" alt="Pulpa de mango">
-            <div class="card-title">Pulpa de mango lista para smoothies 1 kg</div>
-            <div class="card-price">$3.2</div>
-            <div class="card-stock">Stock disponible: 90 unidades</div>
-            <progress value="90" max="100">90%</progress>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/200x200?text=Mix+Berries" alt="Mix berries">
-            <div class="card-title">Mix berries congelados 1 kg</div>
-            <div class="card-price">$4.0</div>
-            <div class="card-stock">Stock disponible: 50 unidades</div>
-            <progress value="50" max="100">50%</progress>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <p>Contacto: 0424-1411022 | Correo: inversioneshortifrutca@gmail.com</p>
-    <p>Ventas al mayor en toda Caracas</p>
-</footer>
-
+  <footer>
+    2025 Teficar ® Todos los derechos reservados
+  </footer>
 </body>
 </html>
 
