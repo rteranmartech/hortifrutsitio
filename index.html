@@ -45,7 +45,7 @@
       document.body.classList.toggle('oscuro');
     }
 
-    window.onload = function() {
+    window.onload = function () {
       actualizarFechaHora();
       setInterval(actualizarFechaHora, 1000);
     }
@@ -74,11 +74,13 @@
     }
     header {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
       background-color: var(--card);
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      gap: 1rem;
     }
     .modo-btn {
       background-color: var(--primary);
@@ -107,10 +109,14 @@
       width: 100%;
       box-sizing: border-box;
     }
+    .table-wrapper {
+      overflow-x: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      min-width: 600px;
     }
     th, td {
       padding: 0.75rem;
@@ -139,6 +145,16 @@
       font-size: 0.85rem;
       color: #888;
     }
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+        margin: 1rem;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -156,18 +172,20 @@
       <input type="number" id="tasa-dolar" class="input" oninput="calcularTotal()" /></label>
     <br /><br />
 
-    <table>
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Descripción</th>
-          <th>Cantidad</th>
-          <th>Precio $</th>
-          <th>Importe</th>
-        </tr>
-      </thead>
-      <tbody id="tabla-body"></tbody>
-    </table>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Precio $</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+      </table>
+    </div>
 
     <button class="boton" onclick="agregarFila()">Agregar línea</button>
 
